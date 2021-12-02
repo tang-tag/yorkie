@@ -1,6 +1,6 @@
 {
-  "name": "yorkie",
-  "version": "2.0.0",
+  "name": "@ai-school/yorkie",
+  "version": "2.0.1",
   "description": "githooks management forked from husky",
   "engines": {
     "node": ">=4"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/yyx990803/yorkie.git"
+    "url": "git@github.com:tang-tag/yorkie.git"
   },
   "keywords": [
     "git",
@@ -29,15 +29,8 @@
     "postmerge",
     "test"
   ],
-  "authors": [
-    "Typicode <typicode@gmail.com>",
-    "Evan You"
-  ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yyx990803/yorkie/issues"
-  },
-  "homepage": "https://github.com/yyx990803/yorkie",
+  "homepage": "https://github.com/tang-tag/yorkie",
   "devDependencies": {
     "jest": "^20.0.4",
     "mkdirp": "^0.5.1",

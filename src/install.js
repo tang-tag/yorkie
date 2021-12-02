@@ -66,7 +66,10 @@ function createHook(depDir, projectDir, hooksDir, hookName, runnerPath) {
 
 function installFrom(depDir) {
   try {
-    const isInSubNodeModule = (depDir.match(/node_modules/g) || []).length > 1
+    const isInSubNodeModule =
+      (depDir.replace('node_modules/.pnpm', '').match(/node_modules/g) || [])
+        .length > 1
+
     if (isInSubNodeModule) {
       return console.log(
         "trying to install from sub 'node_module' directory,",

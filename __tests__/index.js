@@ -134,6 +134,14 @@ describe('yorkie', () => {
     expect(exists(dir, '.git/hooks/pre-push')).toBeFalsy()
   })
 
+  it('should install from pnpm', () => {
+    mkdir(dir, '.git/hooks')
+    mkdir(dir, 'node_modules/.pnpm/yorkie@2.0.0/node_modules/yorkie')
+
+    install(dir, 'node_modules/.pnpm/yorkie@2.0.0/node_modules/yorkie')
+    expect(exists(dir, '.git/hooks/pre-push')).toBeFalsy()
+  })
+
   it("should not crash if there's no .git directory", () => {
     mkdir(dir, 'node_modules/yorkie')
 
