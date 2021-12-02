@@ -7,7 +7,7 @@ const findHooksDir = require('./utils/find-hooks-dir')
 const getHookScript = require('./utils/get-hook-script')
 const is = require('./utils/is')
 const hooks = require('./hooks.json')
-const package = require('../package.json')
+const pkg = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json')))
 
 const SKIP = 'SKIP'
 const UPDATE = 'UPDATE'
@@ -80,7 +80,7 @@ function installFrom(depDir) {
 
     const projectDir = findParent(depDir, 'package.json')
     const hooksDir = findHooksDir(projectDir)
-    const runnerPath = `./node_modules/${package}/src/runner.js`
+    const runnerPath = `./node_modules/${pkg.name}/src/runner.js`
 
     if (hooksDir) {
       hooks

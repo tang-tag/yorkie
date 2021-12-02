@@ -7,6 +7,7 @@ const rimraf = require('rimraf')
 const tempy = require('tempy')
 const installFrom = require('../src/install')
 const uninstallFrom = require('../src/uninstall')
+const pkg = require('../package.json')
 
 function install(rootDir, dir) {
   installFrom(path.join(rootDir, dir))
@@ -39,21 +40,21 @@ describe('yorkie', () => {
 
   it('should support basic layout', () => {
     mkdir(dir, '.git/hooks')
-    mkdir(dir, 'node_modules/yorkie')
+    mkdir(dir, `node_modules/${pkg.name}`)
     writeFile(dir, 'package.json', '{}')
 
-    install(dir, '/node_modules/yorkie')
+    install(dir, `node_modules/${pkg.name}`)
     const hook = readFile(dir, '.git/hooks/pre-commit')
 
     expect(hook).toMatch('#yorkie')
     expect(hook).toMatch('cd "."')
-    expect(hook).toMatch(`node "./node_modules/yorkie/src/runner.js" pre-commit`)
+    expect(hook).toMatch(`node "./node_modules/${pkg.name}/src/runner.js" pre-commit`)
     expect(hook).toMatch('--no-verify')
 
     const prepareCommitMsg = readFile(dir, '.git/hooks/prepare-commit-msg')
     expect(prepareCommitMsg).toMatch('cannot be bypassed')
 
-    uninstall(dir, 'node_modules/yorkie')
+    uninstall(dir, `node_modules/${pkg.name}`)
     expect(exists(dir, '.git/hooks/pre-push')).toBeFalsy()
   })
 
