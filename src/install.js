@@ -67,8 +67,14 @@ function createHook(depDir, projectDir, hooksDir, hookName, runnerPath) {
 
 function installFrom(depDir) {
   try {
+    // 处理 window 兼容
+    let modulePath = path.sep === '\\' ? depDir.replace(/\\/g, '/') : depDir
+
+    // 处理 pnpm 兼容
+    modulePath = modulePath.replace('node_modules/.pnpm', '')
+
     const isInSubNodeModule =
-      (depDir.replace('node_modules/.pnpm', '').match(/node_modules/g) || [])
+      (modulePath.match(/node_modules/g) || [])
         .length > 1
 
     if (isInSubNodeModule) {
@@ -84,13 +90,13 @@ function installFrom(depDir) {
 
     if (hooksDir) {
       hooks
-        .map(function(hookName) {
+        .map(function (hookName) {
           return {
             hookName: hookName,
             action: createHook(depDir, projectDir, hooksDir, hookName, runnerPath)
           }
         })
-        .forEach(function(item) {
+        .forEach(function (item) {
           switch (item.action) {
             case MIGRATE_GHOOKS:
               console.log(`migrating existing ghooks ${item.hookName} script`)
